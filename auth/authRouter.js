@@ -6,6 +6,24 @@ const token = require('./token.js');
 const db = require('../database/dbConfig.js');
 
 const Users = require('../users/usersModel.js');
+const Supporter = require('../supporters/supporterModel.js')
+
+
+
+router.post('/register_supporter', (req, res) => {
+  
+  let user = req.body;
+  const hash = bcrypt.hashSync(user.password, 10); 
+  user.password = hash;
+
+  Supporter.add(user)
+    .then(saved => {
+      res.status(201).json(saved);
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Couldn't add new user" });
+    });
+});
 
 // New user registration //
 router.post('/register', (req, res) => {
