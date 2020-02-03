@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const token = require('./token.js');
 const db = require('../database/dbConfig.js');
 
+const Users = require('../users/usersModel.js');
+
 // New user registration //
 router.post('/register', (req, res) => {
     // implement registration
