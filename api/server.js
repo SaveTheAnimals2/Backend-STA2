@@ -6,6 +6,7 @@ const helmet = require('helmet');
 
 const authRouter = require('../auth/authRouter.js');
 const usersRouter = require('../users/usersRouter.js');
+const campaignRouter = require('../campaigns/campaignRouter.js');
 
 
 const server = express();
@@ -16,6 +17,7 @@ server.use(express.json());
 
 server.use('/api/auth', authRouter);
 server.use('/api/users', usersRouter); 
+server.use('/api/campaigns', campaignRouter);
 
 
 
