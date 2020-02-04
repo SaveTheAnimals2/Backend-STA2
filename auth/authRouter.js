@@ -40,6 +40,29 @@ router.post('/register', (req, res) => {
         res.status(500).json({ error: "Couldn't add new user" });
       });
   });
+
+  
+  // User login //
+  router.post('/login', (req, res) => {
+    // implement login
+    let { username, password } = req.body;
+  
+    Supporter.findBy({ username })
+      .first()
+      .then(user => {
+        if (user && bcrypt.compareSync(password, user.password)) {
+          
+          const getToken = token.generateToken(user); 
+        
+          res.status(200).json({ getToken }); 
+        } else {
+          res.status(401).json({ message: 'Please provide the correct username and password' });
+        }
+      })
+      .catch(error => {
+        res.status(500).json({ error: "There was an error logging in "});
+      });
+  });
   
   // User login //
   router.post('/login', (req, res) => {
