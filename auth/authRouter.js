@@ -43,7 +43,7 @@ router.post('/register', (req, res) => {
 
   
   // User login //
-  router.post('/login', (req, res) => {
+  router.post('/login/supporter', (req, res) => {
     // implement login
     let { username, password } = req.body;
   
