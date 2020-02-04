@@ -3,11 +3,13 @@ const db = require("../database/dbConfig.js");
 module.exports = {
     list,
     findById,
-    update,
     add,
+    update,
     remove,
     findItemizeMonetaryDonations,
-    addItemizedMD
+    addItemizedMD,
+    updateItemizedMD,
+    removeItemizedMD
 };
 
 function list(){
@@ -21,9 +23,9 @@ function findById(campaignId){
 };
 
 
-function update(chages, campaignId){
+function update(campaignId, changes){
     return db('campaign')
-    .update(chages)
+    .update(changes)
     .where({id: campaignId})
 };
 
@@ -50,4 +52,17 @@ function addItemizedMD(campaignId, donations){
     .where("campaign.id", campaignId)
     .insert(donations)
 }
+
+function updateItemizedMD(campaignId, changes){
+    return db('itemize_monetary_donations')
+    .where("itemize_monetary_donations.id", campaignId)
+    .update(changes)
+}
+
+function removeItemizedMD(campaignId){
+    return db('itemize_monetary_donations')
+    .where("itemize_monetary_donations.id", campaignId)
+    .del();
+}
+
 

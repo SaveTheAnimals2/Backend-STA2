@@ -43,9 +43,51 @@ router.post("/", (req, res) => {
         });
 });
 
+// UPDATE edit an existing campaign // 
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const changes = req.body;
+
+    Campaign.update(id, changes)
+    .then(campaign => {
+      if (campaign) {
+        res.status(200).json(campaign);
+      } else {
+        res.status(404).json({ message: 'The campaign could not be found' });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        message: 'Error updating the campaign',
+      });
+    });
+})
+
+// DELETE an existing campaign //
+router.delete('/:id', (req, res) => {
+    Campaign.remove(req.params.id)
+      .then(campaign => {
+        if (campaign > 0) {
+          res.status(200).json({ message: 'The campaign has been deleted' });
+        } else {
+          res.status(404).json({ message: 'The project could not be found' });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).json({
+          message: 'Error removing the campaign',
+        });
+      });
+  });
+
+
+/////////////// MONETARY DONATIONS/////////////////////////
 // GET itemized monetary donations detail for a campaign //
 router.get("/donation/:id", (req, res) => {
     const id = req.params.id
+
     Campaign.findItemizeMonetaryDonations(id)
     .then(donation => {
         res.status(201).json(donation)
@@ -66,6 +108,34 @@ router.post("/donation/:id", (req, res) => {
     })
     .catch(err => {
         res.status(500).json({message: "cannot created new itemized donation"})
+    })
+})
+
+// UPDATE an itemized monetary donation //
+router.put("/donation/:id", (req, res) => {
+    const id = req.params.id
+    const donation = req.body
+    
+    Campaign.updateItemizedMD(id, donation)
+    .then(donation => {
+        res.status(201).json(donation)
+    })
+    .catch(err => {
+        res.status(500).json({message: "cannot update new itemized donation"})
+    })
+})
+
+
+// DELETE an itemized monetary donation //
+router.delete("/donation/:id", (req, res) => {
+    const id = req.params.id
+    
+    Campaign.removeItemizedMD(id)
+    .then(donation => {
+        res.status(201).json(donation)
+    })
+    .catch(err => {
+        res.status(500).json({message: "cannot delete itemized donation"})
     })
 })
 module.exports = router;
