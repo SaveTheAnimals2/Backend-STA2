@@ -84,7 +84,21 @@ router.delete('/:id', (req, res) => {
 
 
 /////////////// MONETARY DONATIONS/////////////////////////
-// GET itemized monetary donations detail for a campaign //
+
+// GET all itemized monetary donations detail //
+router.get("/donation/all", (req, res) => {
+   
+    Campaign.listItemizedMD()
+    .then(donation => {
+        
+        res.status(201).json(donation)
+    })
+    .catch(err => {
+        res.status(500).json({message: "cannot Get donation"})
+    })
+})
+
+// GET itemized monetary donations detail for a campaign id //
 router.get("/donation/:id", (req, res) => {
     const id = req.params.id
 
@@ -97,7 +111,7 @@ router.get("/donation/:id", (req, res) => {
     })
 })
 
-// POST an itemized monetary donation for a campaign //
+// POST an itemized monetary donation for a campaign id//
 router.post("/donation/:id", (req, res) => {
     const id = req.params.id
     const donation = req.body
@@ -111,7 +125,7 @@ router.post("/donation/:id", (req, res) => {
     })
 })
 
-// UPDATE an itemized monetary donation //
+// UPDATE an itemized monetary donation by donation id//
 router.put("/donation/:id", (req, res) => {
     const id = req.params.id
     const donation = req.body
@@ -126,7 +140,7 @@ router.put("/donation/:id", (req, res) => {
 })
 
 
-// DELETE an itemized monetary donation //
+// DELETE an itemized monetary donation by donation id//
 router.delete("/donation/:id", (req, res) => {
     const id = req.params.id
     
