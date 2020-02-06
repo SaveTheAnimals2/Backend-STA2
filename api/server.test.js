@@ -12,7 +12,6 @@ describe('server', function() {
             // make a GET request to //
             return request(server).get('/')
                    .then(res => {
-                    // check that it's working //
                     expect(res.status).toBe(200);
             })
         })
@@ -27,3 +26,5 @@ describe('server', function() {
         })
     })
 })
+
+
